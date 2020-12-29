@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Nav from './components/Nav';
+import Model from './components/Model';
+import ReactDOMServer from "react-dom/server";
+class App extends Component{
+  state = {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    chiffre : 0,
+    droite : 0,
+    haut : 0,
+    largeur : 200,
+    hauteur : 100
+  }
+
+  getData = (drahemLettre) =>{
+
+    this.setState({...drahemLettre})
+  }
+  handlePrint = ()=>{
+   const toPrint =  ReactDOMServer.renderToString(<Model  drahemLettre={{...this.state}} />);
+   var myWindow=window.open('');
+   myWindow.document.write(toPrint);
+   myWindow.print();
+  }
+  render(){
+    return (
+    <div >
+    <Nav print={this.handlePrint} sendData={this.getData} />
+    <Model  drahemLettre={{...this.state}} />
     </div>
   );
+  }
+  
 }
 
 export default App;
